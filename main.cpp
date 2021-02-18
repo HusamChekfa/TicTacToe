@@ -10,12 +10,12 @@ int check_board(const char[], const unsigned int); // return 0 = no winner yet, 
 
 int main() {
 
-	unsigned int turn = 1;
-	unsigned int check = 0;
+	unsigned int turn = 1; // game ends after turn 9
+	unsigned int check = 0; // modified by check_board() call
 	bool playerTurn = true; // true = player 1 turn; false = player 2 turn
 	char choice = ' ';
-	char player1 = 'X';
-	char player2 = 'O';
+	char player1 = 'X'; // player1 symbol
+	char player2 = 'O'; // player2 symbol
 	char entry[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I' };
 
 	// print rules
@@ -26,30 +26,28 @@ int main() {
 	while (check == 0) {
 		// ascii for 'A' = 65
 		string choosePrint = "";
+
+		choosePrint += "Player ";
+		if (playerTurn) { choosePrint += "1 "; }
+		else { choosePrint += "2 "; }
 		choosePrint += "Choose a letter: ";
-		// printf("Choose a letter: ");
 		for (unsigned int i = 0; i < 9; ++i) {
 			if (entry[i] != player1 && entry[i] != player2) {
 				choosePrint += entry[i];
 				choosePrint += ' ';
-				// printf("%c ", entry[i]);
 			}
 		}
 		choosePrint += '\n';
-		// printf("\n");
-		// printf("%s", choosePrint.c_str());
-		// cin >> choice;
-		// add a check for correct value
+
 		bool validChoice = false;
 
 		while (!validChoice) {
 			printf("%s", choosePrint.c_str());
 			choice = ' ';
 			cin >> choice;
-			//if (entry[choice - 65] == choice) { validChoice == true; }
-			if (entry[choice - 65] == choice) { validChoice = true; }
+			if (entry[choice - 65] == choice) { validChoice = true; } // 'A' is 65 in ascii
 		}
-		//printf("hey bro");
+		
 		if (choice >= 65 && choice <= 73) {
 			if (playerTurn) {
 				entry[choice - 65] = player1;
@@ -63,58 +61,42 @@ int main() {
 
 		draw_board(entry);
 		check = check_board(entry, turn);
-		/*
-		if (entry[choice - 65] == choice) { validChoice == true; }
-		while (!validChoice) {
-
-		}
-		if (entry[choice - 65] == choice) {
-
-		}
-		*/
+		
 		++turn;
 	}
-	// while game is not over
-		// alternate turns between player 1 and 2
-		// test if winner / tie / game continues
-		// increment turn
-
-	// print winner / tie
 
 	if (check == 1) {
-		printf("Player 1 wins !");
+		printf("Player 1 wins !\n");
 	}
 	else if (check == 2) {
-		printf("Player 2 wins !");
+		printf("Player 2 wins !\n");
 	}
-	else if (check == 4) {
-		printf("'Tis a tie !");
+	else if (check == 3) {
+		printf("'Tis a tie !\n");
 	}
-
 
   return 0;
 }
 
 void draw_board(const char arr[]) {
-
-	printf("FIX ME -- void draw_board()\n\n");
 	
 	for (unsigned int i = 0; i < 11; ++i) {
 		if (i == 0 || i == 2 || i == 4 || i == 6 || i == 8 || i == 10) {
 			printf("        |         |       \n");
 		}
 		else if (i == 1 || i == 5 || i == 9) {
-			printf("    %c   |    %c    |    %c   \n", arr[i / 4], arr[i / 4 + 1], arr[i / 4 + 2]);
+			printf("    %c   |    %c    |    %c   \n", arr[((i - 1) % 3) * 3], arr[(((i - 1) % 3) * 3) + 1], arr[(((i - 1) % 3) * 3) + 2]);
+			// (((i - # spaces showing up the char in the block ) mod or div by # lines in block ) * # of lines in block) + 0 / 1 / 2 ... depending on block and num of blocks in row
 		}
 		else { // i == 3 || i == 7
 			printf("-------   -------   -------\n");
 		} 
 	}
+	printf("\n");
 }
 
 int check_board(const char arr[], const unsigned int turnNum) { 
 
-	//printf("FIX ME -- int check_board()");
 	char player1 = 'X';
 	char player2 = 'O';
 
