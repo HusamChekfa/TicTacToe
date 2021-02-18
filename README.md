@@ -1,5 +1,6 @@
 # TicTacToe
 Making a simple TicTacToe game for two players
+- Begin: 16 February 2021
 
 # Files
 > Only one file - main.cpp wil be used
