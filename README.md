@@ -26,3 +26,6 @@ Making a simple TicTacToe game for two players
 
 # Notes
 > Symbols will be X and O for Players 1 and 2, respectively
+
+# Completion
+- 17 February 2021
